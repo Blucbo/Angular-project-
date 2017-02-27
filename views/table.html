@@ -1,0 +1,25 @@
+
+<div class="col s12 m9">
+  <h5 class="center">List of companies</h5>
+  <div class="collection">
+    <a ng-repeat="item in items" href="#!" class="collection-item">
+    <h6>Company name: {{item.companyName}}</h6>
+    <span>Products:</span>
+     <ul class="list">
+       <li ng-repeat="companyGood in item.companyGoods track by $index">
+         {{companyGood}}
+       </li>
+     </ul>
+     <span ng-click="editOrCreate(item)" class="btn-floating btn-small waves-effect indigo lighten-1">
+       <i class="material-icons">mode_edit</i>
+     </span>
+     <span ng-click="delete(item)" class="btn-floating btn-small waves-effect indigo lighten-1">
+       <i class="material-icons">delete</i>
+     </span>
+    </a>
+  </div>
+  <div class="">
+    <a ng-click="refresh()" class="waves-effect indigo lighten-1 btn">Refresh</a>
+    <a ng-click="editOrCreate()" class="waves-effect indigo lighten-1 btn">New</a>
+  </div>
+</div>

@@ -1,39 +1,37 @@
 ﻿angular.module("appModule", [])
-.controller("defaultCtrl", function ($scope) {
 
+.controller("defaultCtrl", function ($scope) {
+    $scope.query;
     $scope.currentView = "table";
-    $scope.refresh = function () {
+    $scope.refresh =  () => {
         $scope.items = [
           {
-            companyName: "Item1",
-            companyGoods: ['first1','second1','second1']
+            companyName: "Asus",
+            companyGoods: ['first1','qwsecond1','dsecond1']
           },
           {
             companyName: "Item2",
-            companyGoods: ['first2','second2','second2']
+            companyGoods: ['first2','wsecond2','dsecond2']
           },
           {
             companyName: "Item3",
-            companyGoods: ['first3','second3','nd3']
+            companyGoods: ['first3','wsecond3','nd3']
           }
         ];
     }
 
-    // удаление элемента из модели
-    $scope.delete = function (item) {
+    $scope.delete =  (item) => {
         $scope.items.splice($scope.items.indexOf(item), 1);
     }
 
-    // редеактирование существующего или создание нового элемента
-    $scope.editOrCreate = function (item) {
+    $scope.editOrCreate =  (item) => {
         $scope.currentItem = item ? item : {
           companyGoods: ['']
         };
         $scope.currentView = "edit";
     }
 
-    // сохранение изменений
-    $scope.saveEdit = function (item) {
+    $scope.saveEdit =  (item) => {
       console.log(item);
       let isNewItem = true;
       for (var i = 0; i < $scope.items.length; i++) {
@@ -54,15 +52,10 @@
     }
 
     $scope.deleteItem = (index) => {
-      //$scope.items.splice($scope.items.indexOf(item), 1);
-      //$scope.currentItem.companyGoods.push('');
-      console.log(index);
-      console.log($scope.currentItem.companyGoods);
       $scope.currentItem.companyGoods.splice(index,1);
-      console.log($scope.currentItem.companyGoods);
     }
-    // отмена изменений и возврат в представление table
-    $scope.cancelEdit = function () {
+
+    $scope.cancelEdit =  () => {
         $scope.currentItem = {};
         $scope.currentView = "table";
     }

@@ -1,3 +1,5 @@
+
+
 .parallax-container {
   line-height: 0;
   height: 200px;
@@ -23,6 +25,22 @@
   }
 }
 
-.test {
-  margin-top: 2000px;
+.collection a.collection-item {
+  color: #17246f;
+}
+
+.list {
+  margin: 0px 0px 5px 15px;
+}
+
+input.company,
+input.edit {
+  width: 200px;
+}
+
+input.company {
+  margin-left: 15px;
+}
+a.add {
+  margin: 10px;
 }

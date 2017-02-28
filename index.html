@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="appModule">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
   <title>Avalon FA LTD</title>
-
-  <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script src="lib/angular.js"></script>
+  <script src="js/app.js"></script>
 </head>
-<body>
+<body ng-controller="defaultCtrl">
 <div id="index-banner" class="parallax-container">
   <div class="section no-pad-bot">
     <div class="container">
@@ -21,53 +21,74 @@
 
 <div class="container">
   <div class="section">
-    <!--   Icon Section   -->
     <div class="row">
-      <div class="col s12 m9">
-          <h5 class="center">List of companies</h5>
-          <div class="collection">
-             <a href="#!" class="collection-item">company</a>
-             <a href="#!" class="collection-item">company</a>
-             <a href="#!" class="collection-item">company</a>
-             <a href="#!" class="collection-item">company</a>
-           </div>
+      <div ng-show="currentView == 'table'" class="col s12 m9">
+        <h5 class="center">List of companies</h5>
+        <div ng-if="items.length > 0" class="collection">
+          <a ng-repeat="item in items | filter : queryName | filter : queryProd" href="#!" class="collection-item">
+          <h6>Company name: {{item.companyName}}</h6>
+          <span>Products:</span>
+           <ul class="list">
+             <li ng-repeat="companyGood in item.companyGoods track by $index">
+               {{companyGood}}
+             </li>
+           </ul>
+           <span ng-click="editOrCreate(item)" class="btn-floating btn-small waves-effect indigo lighten-1">
+             <i class="material-icons">mode_edit</i>
+           </span>
+           <span ng-click="delete(item)" class="btn-floating btn-small waves-effect indigo lighten-1">
+             <i class="material-icons">delete</i>
+           </span>
+          </a>
+        </div>
+        <div class="">
+          <a ng-click="refresh()" class="waves-effect indigo lighten-1 btn">Refresh</a>
+          <a ng-click="editOrCreate()" class="waves-effect indigo lighten-1 btn">New</a>
+        </div>
       </div>
-
-      <div class="col s12 m3">
-        <h5 class="center">Filter by name</h5>
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field col s12">
-              <i class="tiny material-icons prefix">search</i>
-              <input id="icon_prefix" type="text" class="validate">
-              <label for="icon_prefix">Company</label>
-            </div>
+      <div ng-show="currentView == 'edit'" class="col s12 m6 offset-m3">
+        <h5>Edit form</h5>
+        <div class="">
+          <label for="icon_prefix">Company name</label>
+          <input ng-model="currentItem.companyName"
+          id="icon_prefix" type="text" class="company validate"/>
+        </div>
+        <div ng-repeat="companyGood in currentItem.companyGoods track by $index">
+          <label>Company goods: {{$index+1}}</label>
+          <input id="icon_prefix" type="text" class="validate edit" ng-model="currentItem.companyGoods[$index]" />
+          <a ng-click="deleteItem($index)" class="btn-floating btn-small waves-effect indigo lighten-1"><i class="material-icons">delete</i></a>
+        </div>
+          <span>Add good</span><a ng-click="addItem()" class="add btn-floating btn-small waves-effect indigo lighten-1"><i class="material-icons">add</i></a>
+          <div class="">
+            <a ng-click="saveEdit(currentItem)" class="waves-effect indigo lighten-1 btn">Save</a>
+            <a ng-click="cancelEdit()" class="waves-effect indigo lighten-1 btn">Cancel</a>
           </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <i class="tiny material-icons prefix">search</i>
-              <input id="icon_prefix" type="text" class="validate">
-              <label for="icon_prefix">Product</label>
-            </div>
-          </div>
-        </form>
       </div>
+      <div ng-show="currentView == 'table'" class="col s12 m3">
+          <h5 class="center">Filter by name</h5>
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="tiny material-icons prefix">search</i>
+                <input ng-model="queryName.companyName" id="icon_prefix" type="text" class="validate">
+                <label for="icon_prefix">Company</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="tiny material-icons prefix">search</i>
+                <input ng-model="queryProd.companyGoods" id="icon_prefix" type="text" class="validate">
+                <label for="icon_prefix">Product</label>
+              </div>
+            </div>
+          </form>
+        </div>
     </div>
   </div>
-  <ul class="pagination center">
-    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-    <li class="active"><a href="#!">1</a></li>
-    <li class="waves-effect"><a href="#!">2</a></li>
-    <li class="waves-effect"><a href="#!">3</a></li>
-    <li class="waves-effect"><a href="#!">4</a></li>
-    <li class="waves-effect"><a href="#!">5</a></li>
-    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-  </ul>
 </div>
-<p class="test">Test parallax</p>
-  <!--  Scripts-->
+
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
+  <script src="js/materialize.min.js"></script>
   <script src="js/init.js"></script>
 
   </body>
